@@ -148,7 +148,7 @@ type: tutorial
 
 #### Step 1.3: Create a project in web console
 
-- We need to create a project to be used and managed from command line. Click on **Create Project** and give a name as `Cockroachdb-test-project`.
+- We need to create a project to be used and managed from command line. Click on **Create Project** and give a name as `Crunchydb-test-project`.
 
 ![rhm](doc/source/images/create-project.png)
 
