@@ -95,7 +95,11 @@ Red Hat® OpenShift® 4 users can access certified software for container-based 
 
     > Note: Why did you have to restart your PostgreSQL pod (steps 4 and 5)? Crunchy PostgreSQL for Kubernetes is set up to work with the "restricted" SCC<!--EM: What is SCC?--> by default, but we may need to make modifications. In this mode, you want to ensure that "DisableFSGroup" is set to **false**. Changing the `pgo-config` ConfigMap requires the `postgres-operator` pod to restart. 
 
+
 1. Download the pgo binary mentioned in the [document URL](https://access.crunchydata.com/documentation/postgres-operator/latest/quickstart/).
+
+    We need to create a project to be used and managed from command line. Click on **Create Project** and give a name as `Crunchydb-test-project`.
+
 
 1. Make sure the pvc are in a bound state. Run the following command: `oc get pvc`.
 
