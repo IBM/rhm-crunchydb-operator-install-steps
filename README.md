@@ -1,6 +1,5 @@
 ---
 #Front matter (metadata).
-abstract:               # REQUIRED
 
 authors:
  - name: "Rahul Reddy Ravipally"
@@ -12,240 +11,144 @@ authors:
  - name: "Manjula G. Hosurmath"
    email: "mhosurma@in.ibm.com"
 
-completed_date: 2020-07-03
+completed_date: "2020-09-29"
+last_updated:  "2020-09-29"
 
-components:
-- slug: "Crunchy PostgreSQL for Kubernetes"
-  name: "Crunchy PostgreSQL for Kubernetes"
-  url: "https://marketplace.redhat.com/en-us/products/crunchy-postgresql-for-kubernetes"
-  type: "component"
-- slug: "redhat-marketplace"
-  name: "Red Hat Marketplace"
-  url: "https://marketplace.redhat.com/"
-  type: "component"
+draft: true
 
-draft: true|false       # REQUIRED
+excerpt: Follow the steps in this tutorial to set up and deploy a CrunchyDB operator hosted on Red Hat Marketplace.
+keywords:  "CrunchyDB, CrunchyDB Operator, Red Hat Marketplace"
+abstract:  Follow the steps in this tutorial to set up and deploy a CrunchyDB operator hosted on Red Hat Marketplace.
 
-excerpt:                # REQUIRED
-
-keywords:               # REQUIRED - comma separated list
-
-last_updated:           # REQUIRED - Note: date format is YYYY-MM-DD
-
-primary_tag:          # REQUIRED - Note: Choose only only one primary tag. Multiple primary tags will result in automation failure. Additional non-primary tags can be added below.
-
-pta:                    # REQUIRED - Note: can be only one
-# For a full list of options see https://github.ibm.com/IBMCode/Definitions/blob/master/primary-technology-area.yml
-# Use the "slug" value found at the link above to include it in this content.
-# Example (remove the # to uncomment):
- # - "cloud, container, and infrastructure"
-
-pwg:                    # REQUIRED - Note: can be one or many
-# For a full list of options see https://github.ibm.com/IBMCode/Definitions/blob/master/portfolio-working-group.yml
-# Use the "slug" value found at the link above to include it in this content.
-# Example (remove the # to uncomment):
-# - "containers"
-
-related_content:        # OPTIONAL - Note: zero or more related content
-  - type: announcements|articles|blogs|patterns|series|tutorials|videos
-    slug:
+# related_content:        # OPTIONAL - Note: zero or more related content
+#  - type: announcements|articles|blogs|patterns|series|tutorials|videos
+ #   slug:
 
 related_links:           # OPTIONAL - Note: zero or more related links
-  - title:
-    url:
-    description:
+  - title: "Crunchy PostgreSQL for Kubernetes"
+    url: "https://marketplace.redhat.com/en-us/products/crunchy-postgresql-for-kubernetes"
+    # description:
+  - title: "Red Hat Marketplace"
+    url: "https://marketplace.redhat.com/"
+    # description:
 
-runtimes:               # OPTIONAL - Note: Select runtimes from the complete set of runtimes below. Do not create new runtimes. Only use runtimes specifically in use by your content.
-# For a full list of options see https://github.ibm.com/IBMCode/Definitions/blob/master/runtimes.yml
-# Use the "slug" value found at the link above to include it in this content.
-# Example (remove the # to uncomment):
- # - "asp.net 5"
+title: "Deploy a CrunchyDB Operator from Red Hat Marketplace on an OpenShift cluster"
+subtitle: "Follow these steps to deploy a supported CrunchyDB operator to an OpenShift cluster"
 
-series:                 # OPTIONAL
- - type:
-   slug:
-
-services:               # OPTIONAL - Note: please select services from the complete set of services below. Do not create new services. Only use services specifically in use by your content.
-# For a full list of options see https://github.ibm.com/IBMCode/Definitions/blob/master/services.yml
-# Use the "slug" value found at the link above to include it in this content.
-# Example (remove the # to uncomment):
-# - "blockchain"
-
-subtitle:               # REQUIRED
-
+primary_tag: databases
 tags:
-# Please select tags from the complete set of tags below. Do not create new tags. Only use tags specifically targeted for your content. If your content could match all tags (for example cloud, hybrid, and on-prem) then do not tag it with those tags. Less is more.
-# For a full list of options see https://github.ibm.com/IBMCode/Definitions/blob/master/tags.yml
-# Use the "slug" value found at the link above to include it in this content.
-# Example (remove the # to uncomment):
- # - "blockchain"
-
-title:                  # REQUIRED
-
-translators:             # OPTIONAL - Note: can be one or more
-  - name:
-    email:
-
-type: tutorial
+  - databases
+  - containers
 
 ---
+Red Hat® OpenShift® 4 users can access certified software for container-based environments via the [Red Hat Marketplace](https://marketplace.redhat.com/en-us/about). Software in the marketplace is immediately available to deploy on any Red Hat OpenShift cluster in a fast, integrated way. Follow the steps in this tutorial to set up and deploy a CrunchyDB operator hosted on Red Hat Marketplace.
 
-# Steps to Deploy CrunchyDB Operator from Red Hat Marketplace on OpenShift Cluster
+## Prerequisites
 
-### Step 1: Configure Openshift Cluster(ROKS) with Redhat Market Place
+* Red Hat OpenShift version 4.3 is required to use with software in Red Hat Marketplace. You can set up a class cluster on IBM Cloud using these instructions: 
+[Set up an OpenShift Cluster](https://cloud.ibm.com/docs/openshift?topic=openshift-getting-started).
+* [Create an account](https://marketplace.redhat.com/api-security/en-us/login/landing) on Red Hat Marketplace.
+* Complete the steps in this tutorial: [Configure a Red Hat OpenShift cluster hosted on Red Hat Marketplace](https://developer.ibm.com/tutorials/configure-a-red-hat-openshift-cluster-with-red-hat-marketplace)
 
-#### Step 1.1: Download OpenShift Command Line Interface (CLI) binary
+## Steps
 
-- Follow the steps below to launch the cluster console which is also called RedHat OpenShift Container Platform.
+1. Install the CrunchyDB Operator
+1. Create and deploy a CrunchyDB Operator on an OpenShift cluster and create a database
+1. Access the cluster on your localhost
 
-- Login to [IBM Cloud Account](https://cloud.ibm.com/) and navigate to Dashboard as shown.
+### Step 1: Install the CrunchyDB Operator
 
-![rhm](doc/source/images/dashboard.png)
+1. Navigate to your **OpenShift web console**. Select **OperatorHub** under Operators and type "Crunchy" in the search bar.
 
-- Click on **Clusters** and select the cluster which you have created under prerequisites. In our case, cluster name is **cp-rhm-poc**.
+    ![](doc/source/images/install-operator1.png)
 
-![](doc/source/images/cluster.png)
+1. Select **Crunchy Postgres Operator** (non custom) and click **Install**.
 
-- After you launch the cluster, click on **OpenShift web console** on the top right hand side.
+    ![](doc/source/images/install.png)
 
-![](doc/source/images/web-console.png)
+1. Create an Operator Subscription by choosing All namespaces or specific namespace (select default project crunchy-project) and click **Subscribe**.
 
-- We can see the RedHat OpenShift Container Platform (Web Console). Click on **question mark icon** on the top right hand side and select **Command Line Tools**. 
+    ![](doc/source/images/subscribe1.png)
 
-![](doc/source/images/cmd-line-tools.png)
+1. After a few minutes, the operator is installed on the cluster. Verify your installation by selecting **Installed Operators** under `Operators` and make sure the status shows as Succeeded.
 
-- Navigate to the section `oc - OpenShift Command Line Interface (CLI)` and download the respective oc binary onto your local system. 
+    ![](doc/source/images/installed-operator.png)
 
-**NOTE: This is needed to manage OpenShift projects from a terminal and is further extended to natively support OpenShift Container Platform features.**
+### Step 2: Create and deploy a CrunchyDB Operator on an OpenShift Cluster and create a database
 
-![](doc/source/images/oc-binary.png)
+1. Use the new namespace where you installed the Crunchy Postgres operator.
 
-- We are all set to proceed to next step which is to register the OpenShift cluster on RedHat Marketplace platform. 
+1. Run the following command in your command line interface (CLI). Once it runs successfully, check the logs and be sure there are no errors in the Ansible logs. Wait for the pod state to change to Complete.
 
-**NOTE: This is mandatory to install any operators from RedHat Marketplace platform using the OpenShift cluster**.
+    ```oc create -f postgres-operator.yml``` 
 
-#### Step 1.2: Register the cluster on RedHat Marketplace
+    ```oc get po
+    NAME               READY   STATUS      RESTARTS   AGE
+    pgo-deploy-zl6sz   0/1     Completed   0          24h
+    ```
 
-- Sign up and login to RHM portal at [Link](https://marketplace.redhat.com/en-us) and click on **workspace** and then click on cluster. We need to add our new OpenShift cluster and register it on RHM platform.
+1. Switch to the Postgres Operator (`pgo`) namespace. `pgo` is a library used to connect to the OpenShift cluster.
 
-![](doc/source/images/add-cluster.png)
+1. Edit `pgo-config configmap` and update `DisableFSGroup` to `false`.
 
-- Update the **cluster name**, generate the pull secret as per the instructions and save it as shown.
+1. Restart the PostgreSQL operator pod, postgres-operator-f7d8c5667-4hhrk
 
-![](doc/source/images/cluster-details.png)
+    > Note: Why did you have to restart your PostgreSQL pod (steps 4 and 5)? Crunchy PostgreSQL for Kubernetes is set up to work with the "restricted" SCC by default, but we may need to make modifications. In this mode, you want to ensure that "DisableFSGroup" is set to **false**. Changing the `pgo-config` ConfigMap requires the `postgres-operator` pod to restart. 
 
-- Copy the curl command which starts with `curl -sL https` and append the pull secret towards the end. 
+1. Download the pgo binary mentioned in the [document URL](https://access.crunchydata.com/documentation/postgres-operator/latest/quickstart/).
 
-**NOTE: The entire script should be handy to be used in next step.**
+    We need to create a project to be used and managed from command line. Click on **Create Project** and give a name as `Crunchydb-test-project`.
 
-- We need to start the cluster first to register it. Open a terminal and type `oc login`, update the `username` and `password` which are used for accessing the cluster and hit enter. 
 
-![](doc/source/images/start-cluster.png)
+1. Make sure the pvc are in a bound state. Run the following command: `oc get pvc`.
 
-- The cluster is up and running at this point. We need to run the entire script which is from previous step and hit enter. It will take a couple of mins and we can see that we have successfully registered the cluster on RHM portal.
+    ![](doc/source/images/pvc.png)
 
-![](doc/source/images/register-cluster.png)
+1. Create a database using the following command.
 
-#### Step 1.3: Create a project in web console
+    ``pgo create cluster -n pgo hippo``
 
-- We need to create a project to be used and managed from command line. Click on **Create Project** and give a name as `Crunchydb-test-project`.
+This will create a database (pods) in the pgo namespace.
 
-![rhm](doc/source/images/create-project.png)
-
-### Step 2: Install the CrunchyDB Operator
-
-- Navigate to **OpenShift web console** which was launched during previous step. Select **operatorhub** under Operators and type 'Crunchy' in the search bar.
-
-![](doc/source/images/install-operator1.png)
-
-- Click on **Crunchy Postgres Operator** (non custom) and click **install**.
-
-![](doc/source/images/install.png)
-
-- Create Operator Subscription by choosing All namespaces or specific namespace (select default project crunchy-project) and click **subscribe**.
-
-![](doc/source/images/subscribe1.png)
-
-- After a couple of minutes, the operator gets installed on the cluster. We can verify by clicking on Installed Operators under `Operators` and see that the operator is successfully installed with status showing as Succeeded.
-
-![](doc/source/images/installed-operator.png)
-
-### Step 3: Connect to the Openshift Cluster in CLI (Command Line Interface)
-
-- Login to the ROKS(IBM Managed) Openshift cluster through CLI(command line Iterface). 
-To login you would require token which can be genrated after you login to Openshift Cluster web console. See below screenshot to `copy the path`.
-![](doc/source/images/Login-CopyCommand.png)
-
-- A new window will open with the login token details. See below screenshot for details. Copy the login token as per the below screenshot.
-![](doc/source/images/Login-Token.png)
-
-- In terminal, paste the login command, Once you login you would see a similar screen as shown below.
-![](doc/source/images/CLI-Login.png)
-
-### Step 4: Create and Deploy CrunchyDB Operator on OpenShift Cluster and Create a database.
-
-- (i). Use the new namespace where we have isntalled the Crunchy Postgres operator.
-- (ii). Run the below command in CLI(command line Iterface). Once it runs successfully, check for the logs and be sure there are no errors in the ansible script. Wait for the pod state to change to complete state.
-
-``oc create -f postgres-operator.yml`` 
-
-``oc get po
-NAME               READY   STATUS      RESTARTS   AGE
-pgo-deploy-zl6sz   0/1     Completed   0          24h
-``
-- (iii). switch to pgo namespace. 
-
-- (iv). Edit `pgo-config configmap` and update `DisableFSGroup` to `false`.
-
-- (v). Restart postgress operator pod. postgres-operator-f7d8c5667-4hhrk
-
-`Note:`Reason for above step (iv, v):
-``Crunchy PostgreSQL for Kubernetes is set up to work with the "restricted" SCC by default, but we may need to make modifications. In this mode, we will want to ensure that "DisableFSGroup" is set to false mentioned "pgo-config" ConfigMap.
-Making changes to the "pgo-config" ConfigMap, we will have to restart the "postgres-operator" Pod. ``
-
-- (vi). Download the pgo binary mentioned in the [document URL](https://access.crunchydata.com/documentation/postgres-operator/latest/quickstart/)
-
-- (vii). Make sure the pvc are in bound state. Run the below command: 
-`oc get pvc`
-![](doc/source/images/pvc.png)
-
-- (viii). Create database using below command.
-``pgo create cluster -n pgo hippo``
-This will create database (pods) in pgo namespace.
-
-- (ix). To validate run below commands.
-    a .`` pgo show cluster -n pgo hippo``
-    b.  ``pgo test -n pgo hippo``
+1. To validate that it worked correctly, run the following commands.
+    
+    To validate the cluster: ` pgo show cluster -n pgo hippo`
+    
+    To validate the test: `pgo test -n pgo hippo`
 
 Attached is the postgres-operator.yml updated file. (edited) 
-[Download postgres-operator.yml](postgres-operator.yml)
 
-### Step 5: Access the cluster on your localhost
+    [Download postgres-operator.yml](postgres-operator.yml)
 
-- Let us view the results of the commands we ran in the earlier steps via the pgAdmin 4 console. The console can be accessed at localhost with port forwarding.
+### Step 3: Access the cluster on your localhost
 
-- Run the following command in Terminal:
-```bash
-$ pgo create pgadmin hippo
-```
-- This creates a pgAdmin 4 deployment unique to this PostgreSQL cluster and synchronizes the PostgreSQL user information into it.
+To view the results of the commands you ran in the earlier steps via the pgAdmin 4 console, CrunchyDB's console. Access the console at localhost with port forwarding.
 
-- To access pgAdmin 4, you can set up a `port-forward` to the Service, which follows the pattern `<clusterName>-pgadmin`, to port `5050`:
-```bash
-$ kubectl port-forward -n pgo svc/hippo-pgadmin 5050:5050 
-```
+1. Run the following command in your terminal:
 
-```
-Forwarding from 127.0.0.1:5050 -> 5050
-Forwarding from [::1]:5050 -> 5050
-```
+    ```bash
+    $ pgo create pgadmin hippo
+    ```
+    
+    This creates a pgAdmin 4 deployment unique to this PostgreSQL cluster and synchronizes the PostgreSQL user information into it.
 
-- Open <http://localhost:5050> on your browser and use your database username (e.g. `hippo`) and password (e.g. `datalake`) to log in.
+1. To access pgAdmin 4, you can set up a `port-forward` to the service, which follows the pattern `<clusterName>-pgadmin`, to port `5050`:
 
-![](doc/source/images/login-pgo.png) 
+    ```bash
+    $ kubectl port-forward -n pgo svc/hippo-pgadmin 5050:5050 
+    ```
 
-(Note: if your password does not appear to work, you can retry setting up the user with the [pgo update](https://access.crunchydata.com/documentation/postgres-operator/4.3.2/pgo-client/reference/pgo_update_user/) user command: `pgo update user -n pgo --username=hippo --password=datalake hippo`)
+    ```
+    Forwarding from 127.0.0.1:5050 -> 5050
+    Forwarding from [::1]:5050 -> 5050
+    ```
 
-- Once logged in, you can see the pgAdmin 4 console as shown.
+1. Open <http://localhost:5050> on your browser and use your database username (e.g. `hippo`) and password (e.g. `datalake`) to log in.
 
-![](doc/source/images/pgadmin4.png)
+    ![](doc/source/images/login-pgo.png) 
+
+    **Note**: If your password doesn't work, retry setting up the user with the [pgo update](https://access.crunchydata.com/documentation/postgres-operator/4.3.2/pgo-client/reference/pgo_update_user/) user command: `pgo update user -n pgo --username=hippo --password=datalake hippo`.
+
+Once logged in, you can see the pgAdmin 4 console as shown.
+
+    ![](doc/source/images/pgadmin4.png)
