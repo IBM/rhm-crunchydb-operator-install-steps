@@ -78,7 +78,7 @@ Red Hat® OpenShift® 4 users can access certified software for container-based 
 
 1. Use the new namespace where you installed the Crunchy Postgres operator.
 
-1. Run the following command in your command line interface (CLI). Once it runs successfully, check the logs and be sure there are no errors in the Ansible script. <!--EM: Do they have to have Ansible installed?-->. Wait for the pod state to change to Complete.
+1. Run the following command in your command line interface (CLI). Once it runs successfully, check the logs and be sure there are no errors in the Ansible logs. Wait for the pod state to change to Complete.
 
     ```oc create -f postgres-operator.yml``` 
 
@@ -87,14 +87,13 @@ Red Hat® OpenShift® 4 users can access certified software for container-based 
     pgo-deploy-zl6sz   0/1     Completed   0          24h
     ```
 
-1. Switch to the `pgo` namespace. `pgo` is a library used to connect to the OpenShift cluster.
+1. Switch to the Postgres Operator (`pgo`) namespace. `pgo` is a library used to connect to the OpenShift cluster.
 
 1. Edit `pgo-config configmap` and update `DisableFSGroup` to `false`.
 
 1. Restart the PostgreSQL operator pod, postgres-operator-f7d8c5667-4hhrk
 
-    > Note: Why did you have to restart your PostgreSQL pod (steps 4 and 5)? Crunchy PostgreSQL for Kubernetes is set up to work with the "restricted" SCC<!--EM: What is SCC?--> by default, but we may need to make modifications. In this mode, you want to ensure that "DisableFSGroup" is set to **false**. Changing the `pgo-config` ConfigMap requires the `postgres-operator` pod to restart. 
-
+    > Note: Why did you have to restart your PostgreSQL pod (steps 4 and 5)? Crunchy PostgreSQL for Kubernetes is set up to work with the "restricted" SCC by default, but we may need to make modifications. In this mode, you want to ensure that "DisableFSGroup" is set to **false**. Changing the `pgo-config` ConfigMap requires the `postgres-operator` pod to restart. 
 
 1. Download the pgo binary mentioned in the [document URL](https://access.crunchydata.com/documentation/postgres-operator/latest/quickstart/).
 
@@ -123,7 +122,7 @@ Attached is the postgres-operator.yml updated file. (edited)
 
 ### Step 3: Access the cluster on your localhost
 
-To view the results of the commands you ran in the earlier steps via the pgAdmin 4 console<!--EM: What is pgAdmin 4 console? Is that the RH console?-->. Access the console at localhost with port forwarding.
+To view the results of the commands you ran in the earlier steps via the pgAdmin 4 console, CrunchyDB's console. Access the console at localhost with port forwarding.
 
 1. Run the following command in your terminal:
 
